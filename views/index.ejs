@@ -55,6 +55,83 @@
 		</nav>
 	</header>
 	<main class="main pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <% if(typeof baiviet !== "undefined" && baiviet.length > 0) { %>
+                        <% baiviet.forEach(bv => { %>
+                            <div class="col-md-6 col-lg-4">
+                                <article class="card mb-4">
+                                    <header class="card-header">
+                                        <div class="card-meta">
+                                            <a href="#"><time class="timeago" datetime="<%= bv.NgayDang ? bv.NgayDang.toISOString() : '' %>"></time></a> 
+                                            thuộc 
+                                            <a href="/baiviet/chude/<%= bv.ChuDe ? bv.ChuDe._id : '#' %>">
+                                                <%= bv.ChuDe ? bv.ChuDe.TenChuDe : 'Chưa phân loại' %>
+                                            </a>
+                                        </div>
+                                        <a href="/baiviet/chitiet/<%= bv._id %>">
+                                            <h4 class="card-title"><%= bv.TieuDe %></h4>
+                                        </a>
+                                    </header>
+                                    <a href="/baiviet/chitiet/<%= bv._id %>">
+                                        <img class="card-img" src="<%- (typeof firstImage !== 'undefined') ? firstImage(bv.NoiDung) : '/images/noimage.png' %>" alt="" />
+                                    </a>
+                                    <div class="card-body">
+                                        <p class="card-text text-truncate-3"><%= bv.TomTat %></p>
+                                    </div>
+                                </article>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p class="text-center">Chưa có bài viết nào.</p>
+                    <% } %>
+                </div>
+                
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#">Về trước</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Về sau</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-md-3 ms-auto">
+                <aside class="sidebar">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Giới thiệu</h4>
+                            <p class="card-text small text-muted">Đọc tin tức trên trang web này sẽ giúp bạn có cái nhìn khách quan về cuộc sống.</p>
+                        </div>
+                    </div>
+                </aside>
+                <aside class="sidebar sidebar-sticky">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Thẻ</h4>
+                            <% if(typeof chuyenmuc !== "undefined") { chuyenmuc.forEach(cd => { %>
+                                <a class="btn btn-light btn-sm mb-1" href="/baiviet/chude/<%= cd._id %>"><%= cd.TenChuDe %></a>
+                            <% }); } %>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Xem nhiều nhất</h4>
+                            <% if(typeof xemnhieunhat !== "undefined") { xemnhieunhat.forEach(bv => { %>
+                                <a href="/baiviet/chitiet/<%= bv._id %>" class="d-block mt-3 border-bottom pb-2 text-decoration-none">
+                                    <h6 class="mb-1 text-dark"><%= bv.TieuDe %></h6>
+                                    <time class="small text-muted"><%= bv.NgayDang.toLocaleDateString('vi-VN') %></time>
+                                </a>
+                            <% }); } %>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</main>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
